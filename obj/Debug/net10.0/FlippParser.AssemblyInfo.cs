@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FlippParser")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a4e14062311cc93be391daa255f0bc5b9012d15e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FlippParser")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FlippParser")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
