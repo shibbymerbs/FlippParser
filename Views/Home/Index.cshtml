@@ -2,16 +2,22 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <form method="post" action="/Home/Search">
-        <div>
-            <label for="postal_code">Postal Code:</label>
-            <input type="text" id="postal_code" name="PostalCode" value="H4A1B9" />
+<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <form method="post" action="/Home/Search" class="p-4 border rounded shadow-sm bg-light"
+          style="min-width:340px;max-width:400px;width:100%;">
+        <h2 class="mb-4 text-center">Flipp Search</h2>
+        <div class="mb-3">
+            <label for="postal_code" class="form-label">Postal Code</label>
+            <input type="text" id="postal_code" name="PostalCode" value="H4A1B9" class="form-control"
+                   placeholder="Enter postal code" />
         </div>
-        <div>
-            <label for="q">Search Query:</label>
-            <input type="text" id="q" name="Query" value="Walmart AND milk" />
+        <div class="mb-3">
+            <label for="q" class="form-label">Search Query</label>
+            <input type="text" id="q" name="Query" value="Walmart AND milk" class="form-control"
+                   placeholder="e.g. Walmart AND milk" />
         </div>
-        <button type="submit">Search</button>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-block">Search</button>
+        </div>
     </form>
 </div>
