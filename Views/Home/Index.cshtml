@@ -3,21 +3,47 @@
 }
 
 <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
-    <form method="post" action="/Home/Search" class="p-4 border rounded shadow-sm bg-light"
+    <form id="flipp-search-form" method="post" action="/Home/Search" class="p-4 border rounded shadow-sm bg-light"
           style="min-width:340px;max-width:400px;width:100%;">
         <h2 class="mb-4 text-center">Flipp Search</h2>
         <div class="mb-3">
             <label for="postal_code" class="form-label">Postal Code</label>
-            <input type="text" id="postal_code" name="PostalCode" value="H4A1B9" class="form-control"
+            <input type="text" id="postal_code" name="PostalCode" class="form-control"
                    placeholder="Enter postal code" />
         </div>
         <div class="mb-3">
-            <label for="q" class="form-label">Search Query</label>
-            <input type="text" id="q" name="Query" value="Walmart AND milk" class="form-control"
-                   placeholder="e.g. Walmart AND milk" />
+            <label for="q" class="form-label">Search Query
+            </label>
+            <input type="text" id="q" name="Query" class="form-control" placeholder="e.g. Walmart AND milk" />
+            <span style="color:gray;font-size:0.9em;text-align:center;display:block;margin-top:0.2em;">
+                ℹ️:You can use AND for advanced queries (e.g. Store name AND product).
+            </span>
         </div>
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary btn-block">Search</button>
         </div>
     </form>
 </div>
+
+<script>
+    // Restore values from localStorage
+    window.addEventListener('DOMContentLoaded', function () {
+        const postalInput = document.getElementById('postal_code');
+        const queryInput = document.getElementById('q');
+        const last = localStorage.getItem('flipp_last_search');
+        if (last) {
+            try {
+                const data = JSON.parse(last);
+                if (data.PostalCode) postalInput.value = data.PostalCode;
+                if (data.Query) queryInput.value = data.Query;
+            } catch { }
+        }
+        // Save values on form submit
+        document.getElementById('flipp-search-form').addEventListener('submit', function (e) {
+            localStorage.setItem('flipp_last_search', JSON.stringify({
+                PostalCode: postalInput.value,
+                Query: queryInput.value
+            }));
+        });
+    });
+</script>
