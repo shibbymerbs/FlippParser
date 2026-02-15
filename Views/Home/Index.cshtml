@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <form method="post" action="/Home/Search">
+        <div>
+            <label for="postal_code">Postal Code:</label>
+            <input type="text" id="postal_code" name="PostalCode" value="H4A1B9" />
+        </div>
+        <div>
+            <label for="q">Search Query:</label>
+            <input type="text" id="q" name="Query" value="Walmart AND milk" />
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>

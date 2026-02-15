@@ -1,0 +1,100 @@
+@model FlippParser.Code.FlippSearchResult
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<div>
+    <h1>@ViewData["Title"]</h1>
+</div>
+<div>
+    <p>Search Parameters:</p>
+    <ul>
+        <li>Postal Code: @Model.SearchParams?.PostalCode</li>
+        <li>Query: @Model.SearchParams?.Query</li>
+    </ul>
+</div>
+@if (Model == null)
+{
+    <div>No search results to display.</div>
+}
+else if (Model.IsError)
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+else if (Model.items == null || !Model.items.Any())
+{
+    <div>No items found.</div>
+}
+else
+{
+    <div style="margin-bottom:10px">
+        <label for="filterInput">Filter results:</label>
+        <input type="text" id="filterInput" placeholder="Type to filter..." onkeyup="filterTable()" class="form-control"
+               style="max-width:300px;display:inline-block;" />
+    </div>
+    <table class="table table-striped" id="resultsTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Name</th>
+                <th onclick="sortTable(1)">Merchant</th>
+                <th onclick="sortTable(2)">Current Price</th>
+                <th onclick="sortTable(3)">Original Price</th>
+                <th onclick="sortTable(4)">Sale Story</th>
+                <th onclick="sortTable(5)">Valid From</th>
+                <th onclick="sortTable(6)">Valid To</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.items)
+            {
+                <tr>
+                    <td>@item.name</td>
+                    <td>@item.merchant_name</td>
+                    <td>@item.current_price</td>
+                    <td>@item.original_price</td>
+                    <td>@item.sale_story</td>
+                    <td>@DateTime.Parse(item.valid_from).ToLongDateString()</td>
+                    <td>@DateTime.Parse(item.valid_to).ToLongDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script>
+        // Simplified table sort using array sort
+        let sortDirection = {};
+        function sortTable(n) {
+            const table = document.getElementById("resultsTable");
+            const tbody = table.tBodies[0];
+            const rows = Array.from(tbody.rows);
+            let dir = sortDirection[n] === "desc" ? "asc" : "desc";
+            sortDirection[n] = dir;
+            rows.sort((a, b) => {
+                let x = a.cells[n].textContent.trim();
+                let y = b.cells[n].textContent.trim();
+                let xNum = parseFloat(x.replace(/[^0-9.\-]/g, ""));
+                let yNum = parseFloat(y.replace(/[^0-9.\-]/g, ""));
+                let isNumeric = !isNaN(xNum) && !isNaN(yNum);
+                if (isNumeric) {
+                    return dir === "asc" ? xNum - yNum : yNum - xNum;
+                } else {
+                    return dir === "asc" ? x.localeCompare(y) : y.localeCompare(x);
+                }
+            });
+            // Re-append sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // Client-side filter function
+        function filterTable() {
+            const input = document.getElementById("filterInput");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("resultsTable");
+            const trs = table.tBodies[0].getElementsByTagName("tr");
+            for (let i = 0; i < trs.length; i++) {
+                let rowText = trs[i].textContent.toLowerCase();
+                trs[i].style.display = rowText.indexOf(filter) > -1 ? "" : "none";
+            }
+        }
+    </script>
+    <div>Total Results: @Model.Total</div>
+}
