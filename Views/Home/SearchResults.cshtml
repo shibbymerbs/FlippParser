@@ -190,6 +190,13 @@
                                     if (page > totalPages) page = totalPages;
                                     currentPage = page;
                                     updatePagination();
+                                    // Scroll to top of table or card grid
+                                    const table = document.getElementById("paginationControls");
+                                    const cards = document.getElementById("cardView");
+                                    const target = isCardView ? cards : table;
+                                    if (target) {
+                                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                                    }
                                 }
 
                                 function toggleView() {
