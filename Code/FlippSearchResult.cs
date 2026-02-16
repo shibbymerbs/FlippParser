@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace FlippParser.Code;
 
 public class FlippSearchResult
