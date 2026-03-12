@@ -25,7 +25,6 @@ function sortTable(n) {
         }
     });
     rows.forEach(row => tbody.appendChild(row));
-    currentPage = 1;
     updatePagination();
 }
 
@@ -87,10 +86,8 @@ function gotoPage(page) {
     if (page > totalPages) page = totalPages;
     currentPage = page;
     updatePagination();
-    // Scroll to top of table or card grid
-    const table = document.getElementById("paginationControls");
-    const cards = document.getElementById("cardView");
-    const target = isCardView ? cards : table;
+    // Scroll to top of table or card grid after page change
+    const target = document.getElementsByTagName("nav")[0];
     if (target) {
         target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -103,7 +100,6 @@ function toggleView() {
     document.getElementById("cardView").style.display = isCardView ? "flex" : "none";
     const btn = document.getElementById("toggleViewBtn");
     btn.textContent = isCardView ? "Grid View" : "Card View";
-    currentPage = 1;
     updatePagination();
 }
 
