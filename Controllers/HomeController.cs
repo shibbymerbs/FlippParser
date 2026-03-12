@@ -16,6 +16,29 @@ public class HomeController : Controller
     public async Task<IActionResult> Search(SearchParams searchParams)
     {
         var parser = new Flippy();
+
+        if (searchParams == null)
+        {
+            ModelState.AddModelError(string.Empty, "Search parameters are required.");
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(searchParams.PostalCode))
+            {
+                ModelState.AddModelError("PostalCode", "Postal code is required.");
+            }
+
+            if (string.IsNullOrEmpty(searchParams.Query))
+            {
+                ModelState.AddModelError("Query", "Search query is required.");
+            }
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View("Index", searchParams);
+        }
+
         var results = await parser.SearchAsync(searchParams);
         return View("SearchResults", results);
     }

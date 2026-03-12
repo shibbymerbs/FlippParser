@@ -1,4 +1,5 @@
-﻿@{
+﻿@model FlippParser.Code.SearchParams
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,18 +7,25 @@
     <form id="flipp-search-form" method="post" action="/Home/Search" class="p-4 border rounded shadow-sm bg-light"
           style="min-width:340px;max-width:400px;width:100%;">
         <h2 class="mb-4 text-center">Flipp Search</h2>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger mb-3">
+                Please fix the errors below and try again.
+            </div>
+        }
         <div class="mb-3">
             <label for="postal_code" class="form-label">Postal Code</label>
-            <input type="text" id="postal_code" name="PostalCode" class="form-control"
-                   placeholder="Enter postal code" />
+            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control", placeholder = "Enter postal code", id = "postal_code" })
+            @Html.ValidationMessageFor(m => m.PostalCode, "", new { @class = "text-danger" })
         </div>
         <div class="mb-3">
             <label for="q" class="form-label">Search Query
             </label>
-            <input type="text" id="q" name="Query" class="form-control" placeholder="e.g. Walmart AND milk" />
+            @Html.TextBoxFor(m => m.Query, new { @class = "form-control", placeholder = "e.g. Walmart AND milk", id = "q" })
             <span style="color:gray;font-size:0.9em;text-align:center;display:block;margin-top:0.2em;">
                 ℹ️:You can use AND for advanced queries (e.g. Store name AND product).
             </span>
+            @Html.ValidationMessageFor(m => m.Query, "", new { @class = "text-danger" })
         </div>
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary btn-block">Search</button>
