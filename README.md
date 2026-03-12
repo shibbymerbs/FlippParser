@@ -4,6 +4,8 @@
 
 FlippParser is a .NET Core web application that allows users to search for products on the Flipp platform (a grocery store price comparison service) by entering a postal code and search query. The application makes API calls to the Flipp backend, displays search results in a table or card view, and includes features like filtering, sorting, pagination, and view switching.
 
+🌐 Demo link:  https://flippparser2-u68061.vm.elestio.app/
+
 ## Features
 
 - Search for products on Flipp by postal code and query
